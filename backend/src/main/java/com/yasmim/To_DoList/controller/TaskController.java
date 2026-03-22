@@ -28,10 +28,21 @@ public class TaskController {
         return taskService.listar();
     }
 
-    @DeleteMapping
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> atualizar(@PathVariable Long id,
+                                          @RequestBody Task task) {
+        return ResponseEntity.ok(taskService.atualizar(id, task));
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarPorId(@PathVariable Long id){
         taskService.deletar(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{id}/concluir")
+    public ResponseEntity<Task> concluir(@PathVariable Long id) {
+        return ResponseEntity.ok(taskService.marcarComoConcluida(id));
     }
 
 
