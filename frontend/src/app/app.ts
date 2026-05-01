@@ -1,13 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-export interface toDoItem{
-  id: number;
-  titulo: string;
-  descricao: string;
-  concluida: boolean;
-}
-
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
@@ -15,7 +8,5 @@ export interface toDoItem{
   styleUrl: './app.css'
 })
 export class App {
-  TodoList :toDoItem[] = [];
-  newTask: string="";
+  protected readonly title = signal('frontend');
 }
-
