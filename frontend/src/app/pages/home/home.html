@@ -1,1 +1,55 @@
-<p>home works!</p>
+<div class="page">
+  <header class="header">
+    <h1>✨ Minhas Listas ✨</h1>
+    <p class="subtitle">Organize suas tarefas de forma fofa!</p>
+  </header>
+
+  <div class="nova-lista-bar">
+    <button class="btn-primary" (click)="abrirFormNova()">
+      <span class="icon">＋</span> Nova Lista
+    </button>
+  </div>
+
+  <!-- Modal de formulário -->
+  @if (showForm()) {
+    <div class="modal-overlay" (click)="fecharForm()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <app-lista-form
+          [lista]="listaEmEdicao()"
+          (salvar)="salvarLista($event)"
+          (cancelar)="fecharForm()"
+        />
+      </div>
+    </div>
+  }
+
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Carregando listas...</p>
+    </div>
+  }
+
+  <!-- Listas -->
+  @if (!loading()) {
+    @if (listas().length === 0) {
+      <div class="empty-state">
+        <span class="empty-icon">📋</span>
+        <p>Nenhuma lista criada ainda.</p>
+        <p class="empty-sub">Clique em <strong>Nova Lista</strong> para começar!</p>
+      </div>
+    } @else {
+      <div class="listas-grid">
+        @for (lista of listas(); track lista.id) {
+          <app-lista-card
+            [lista]="lista"
+            (abrir)="abrirLista($event)"
+            (editar)="editarLista($event)"
+            (excluir)="excluirLista($event)"
+          />
+        }
+      </div>
+    }
+  }
+</div>

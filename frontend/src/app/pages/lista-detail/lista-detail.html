@@ -1,1 +1,94 @@
-<p>lista-detail works!</p>
+<div class="page">
+  <!-- Header -->
+  <header class="header">
+    <button class="btn-back" (click)="voltar()">← Voltar</button>
+
+    @if (lista()) {
+      <div class="header-info">
+        <h1>{{ lista()!.titulo }}</h1>
+        @if (lista()!.descricao) {
+          <p class="desc">{{ lista()!.descricao }}</p>
+        }
+      </div>
+    }
+
+    <button class="btn-primary" (click)="abrirFormNova()">
+      <span>＋</span> Nova Tarefa
+    </button>
+  </header>
+
+  <!-- Contadores -->
+  <div class="counters">
+    <button
+      class="counter-chip all"
+      [class.active]="filtroStatus() === 'TODOS'"
+      (click)="setFiltro('TODOS')"
+    >
+      📋 Todas ({{ contadores.total }})
+    </button>
+    <button
+      class="counter-chip pendente"
+      [class.active]="filtroStatus() === 'PENDENTE'"
+      (click)="setFiltro('PENDENTE')"
+    >
+      ⏳ Pendente ({{ contadores.pendente }})
+    </button>
+    <button
+      class="counter-chip andamento"
+      [class.active]="filtroStatus() === 'EM_ANDAMENTO'"
+      (click)="setFiltro('EM_ANDAMENTO')"
+    >
+      🔄 Em andamento ({{ contadores.emAndamento }})
+    </button>
+    <button
+      class="counter-chip concluida"
+      [class.active]="filtroStatus() === 'CONCLUIDA'"
+      (click)="setFiltro('CONCLUIDA')"
+    >
+      ✅ Concluída ({{ contadores.concluida }})
+    </button>
+  </div>
+
+  <!-- Modal Tarefa Form -->
+  @if (showForm()) {
+    <div class="modal-overlay" (click)="fecharForm()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <app-task-form
+          [task]="tarefaEmEdicao()"
+          [listaId]="listaId"
+          (salvar)="salvarTarefa($event)"
+          (cancelar)="fecharForm()"
+        />
+      </div>
+    </div>
+  }
+
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Carregando tarefas...</p>
+    </div>
+  }
+
+  <!-- Tarefas -->
+  @if (!loading()) {
+    @if (tarefasFiltradas.length === 0) {
+      <div class="empty-state">
+        <span class="empty-icon">🌸</span>
+        <p>Nenhuma tarefa aqui ainda!</p>
+      </div>
+    } @else {
+      <div class="tarefas-list">
+        @for (task of tarefasFiltradas; track task.id) {
+          <app-task-card
+            [task]="task"
+            (editar)="editarTarefa($event)"
+            (excluir)="excluirTarefa($event)"
+            (alterarStatus)="alterarStatus($event)"
+          />
+        }
+      </div>
+    }
+  }
+</div>
