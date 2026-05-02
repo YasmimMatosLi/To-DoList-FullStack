@@ -1,1 +1,18 @@
-<p>lista-card works!</p>
+<div class="card" (click)="onAbrir()">
+  <div class="card-header">
+    <h3 class="card-title">{{ lista.titulo }}</h3>
+    <div class="card-actions">
+      <button class="btn-icon edit" (click)="onEditar($event)" title="Editar">✏️</button>
+      <button class="btn-icon delete" (click)="onExcluir($event)" title="Excluir">🗑️</button>
+    </div>
+  </div>
+
+  @if (lista.descricao) {
+    <p class="card-desc">{{ lista.descricao }}</p>
+  }
+
+  <div class="card-footer">
+    <span class="card-date">📅 {{ formatarData(lista.dataCriacao) }}</span>
+    <span class="card-link">Ver tarefas →</span>
+  </div>
+</div>

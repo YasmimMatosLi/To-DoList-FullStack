@@ -1,1 +1,57 @@
-<p>task-form works!</p>
+<div class="form-container">
+  <h2 class="form-title">{{ isEdicao ? '✏️ Editar Tarefa' : '🌸 Nova Tarefa' }}</h2>
+
+  <div class="field">
+    <label>Título *</label>
+    <input
+      type="text"
+      [(ngModel)]="form.titulo"
+      placeholder="O que precisa ser feito?"
+      class="input"
+      maxlength="120"
+    />
+  </div>
+
+  <div class="field">
+    <label>Descrição</label>
+    <textarea
+      [(ngModel)]="form.descricao"
+      placeholder="Detalhes da tarefa..."
+      class="input textarea"
+      rows="3"
+      maxlength="400"
+    ></textarea>
+  </div>
+
+  <div class="fields-row">
+    <div class="field">
+      <label>Status</label>
+      <select [(ngModel)]="form.status" class="input select">
+        @for (opt of statusOptions; track opt.value) {
+          <option [value]="opt.value">{{ opt.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Data de término</label>
+      <input
+        type="date"
+        [(ngModel)]="form.dataTermino"
+        class="input"
+      />
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn-cancel" type="button" (click)="cancelar.emit()">Cancelar</button>
+    <button
+      class="btn-save"
+      type="button"
+      (click)="onSubmit()"
+      [disabled]="!form.titulo.trim()"
+    >
+      {{ isEdicao ? 'Salvar alterações' : 'Criar tarefa' }}
+    </button>
+  </div>
+</div>

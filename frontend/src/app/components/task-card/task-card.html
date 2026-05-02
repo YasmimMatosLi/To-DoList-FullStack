@@ -1,1 +1,39 @@
-<p>task-card works!</p>
+<div class="card" [class]="statusClass">
+  <div class="card-top">
+    <div class="card-info">
+      <h3 class="title">{{ task.titulo }}</h3>
+      @if (task.descricao) {
+        <p class="desc">{{ task.descricao }}</p>
+      }
+    </div>
+    <div class="card-actions">
+      <button class="btn-icon" (click)="onEditar($event)" title="Editar">✏️</button>
+      <button class="btn-icon" (click)="onExcluir($event)" title="Excluir">🗑️</button>
+    </div>
+  </div>
+
+  <div class="card-bottom">
+    <select
+      class="status-select"
+      [class]="statusClass"
+      [value]="task.status"
+      (change)="onStatusChange($event)"
+      (click)="$event.stopPropagation()"
+    >
+      @for (opt of statusOptions; track opt.value) {
+        <option [value]="opt.value" [selected]="task.status === opt.value">
+          {{ opt.label }}
+        </option>
+      }
+    </select>
+
+    <div class="dates">
+      @if (task.dataCriacao) {
+        <span class="date-chip">📅 Criada: {{ formatarData(task.dataCriacao) }}</span>
+      }
+      @if (task.dataTermino) {
+        <span class="date-chip prazo">🏁 Prazo: {{ formatarData(task.dataTermino) }}</span>
+      }
+    </div>
+  </div>
+</div>

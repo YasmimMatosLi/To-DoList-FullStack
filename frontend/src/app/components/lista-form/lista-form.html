@@ -1,1 +1,37 @@
-<p>lista-form works!</p>
+<div class="form-container">
+  <h2 class="form-title">{{ isEdicao ? '✏️ Editar Lista' : '✨ Nova Lista' }}</h2>
+
+  <div class="field">
+    <label>Título *</label>
+    <input
+      type="text"
+      [(ngModel)]="form.titulo"
+      placeholder="Nome da lista..."
+      class="input"
+      maxlength="100"
+    />
+  </div>
+
+  <div class="field">
+    <label>Descrição</label>
+    <textarea
+      [(ngModel)]="form.descricao"
+      placeholder="Descreva sua lista..."
+      class="input textarea"
+      rows="3"
+      maxlength="300"
+    ></textarea>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn-cancel" type="button" (click)="cancelar.emit()">Cancelar</button>
+    <button
+      class="btn-save"
+      type="button"
+      (click)="onSubmit()"
+      [disabled]="!form.titulo.trim()"
+    >
+      {{ isEdicao ? 'Salvar alterações' : 'Criar lista' }}
+    </button>
+  </div>
+</div>

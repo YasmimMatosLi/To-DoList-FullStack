@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 1.2rem 1.4rem;
+  font-family: 'Nunito', sans-serif;
+  box-shadow: 0 3px 12px rgba(155, 39, 175, 0.08);
+  border-left: 5px solid #e0e0e0;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 6px 20px rgba(155, 39, 175, 0.15);
+}
+
+.card.pendente {
+  border-left-color: #ff9800;
+  background: #fffde7;
+}
+
+.card.andamento {
+  border-left-color: #2196f3;
+  background: #e3f2fd;
+}
+
+.card.concluida {
+  border-left-color: #4caf50;
+  background: #f1f8e9;
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card-info {
+  flex: 1;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #4a2060;
+  margin-bottom: 0.3rem;
+}
+
+.card.concluida .title {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.desc {
+  font-size: 0.88rem;
+  color: #7f8c8d;
+  line-height: 1.4;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.btn-icon:hover {
+  background: rgba(155, 39, 175, 0.08);
+}
+
+.card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.status-select {
+  border: 2px solid #f3c6e8;
+  border-radius: 50px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  background: white;
+  outline: none;
+  color: #4a2060;
+}
+
+.status-select.pendente {
+  border-color: #ff9800;
+  color: #e65100;
+  background: #fff3e0;
+}
+
+.status-select.andamento {
+  border-color: #2196f3;
+  color: #0d47a1;
+  background: #e3f2fd;
+}
+
+.status-select.concluida {
+  border-color: #4caf50;
+  color: #1b5e20;
+  background: #f1f8e9;
+}
+
+.dates {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.date-chip {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #9b27af;
+  background: #f8f0ff;
+  padding: 0.2rem 0.7rem;
+  border-radius: 50px;
+}
+
+.date-chip.prazo {
+  color: #c0392b;
+  background: #ffeaea;
+}
