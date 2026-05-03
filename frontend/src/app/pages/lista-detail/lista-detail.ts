@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Lista } from '../../models/lista.model';
 import { Task, StatusTask } from '../../models/task.model';
 import { ListaService } from '../../services/lista.service';
-import { TarefaService } from '../../services/task.service';
+import { TaskService } from '../../services/task.service';
 import { TaskCardComponent } from '../../components/task-card/task-card';
 import { TaskFormComponent } from '../../components/task-form/task-form';
 
@@ -28,7 +28,7 @@ export class ListaDetail implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private listaService: ListaService,
-    private tarefaService: TarefaService
+    private taskService: TaskService
   ) {}
 
   ngOnInit() {
@@ -44,16 +44,18 @@ export class ListaDetail implements OnInit {
     });
   }
 
+  
   carregarTarefas() {
-    this.loading.set(true);
-    this.tarefaService.getByLista(this.listaId).subscribe({
-      next: (data) => {
-        this.tarefas.set(data);
-        this.loading.set(false);
-      },
-      error: () => this.loading.set(false),
-    });
-  }
+  this.loading.set(true);
+  this.taskService.getAll().subscribe({
+    next: (data) => {
+      const filtradas = data.filter(t => Number(t.listaId) === Number(this.listaId));
+      this.tarefas.set(filtradas);
+      this.loading.set(false);
+    },
+    error: () => this.loading.set(false),
+  });
+}
 
   get tarefasFiltradas(): Task[] {
     const filtro = this.filtroStatus();
@@ -66,7 +68,7 @@ export class ListaDetail implements OnInit {
     return {
       total: all.length,
       pendente: all.filter((t) => t.status === 'PENDENTE').length,
-      emAndamento: all.filter((t) => t.status === 'EM_ANDAMENTO').length,
+      emAndamento: all.filter((t) => t.status === 'ANDAMENTO').length,
       concluida: all.filter((t) => t.status === 'CONCLUIDA').length,
     };
   }
@@ -90,15 +92,15 @@ export class ListaDetail implements OnInit {
     this.tarefaEmEdicao.set(null);
   }
 
-  salvarTarefa(tarefa: Task) {
+  salvarTask(tarefa: Task) {
     const payload = { ...tarefa, listaId: this.listaId };
     if (tarefa.id) {
-      this.tarefaService.update(tarefa.id, payload).subscribe(() => {
+      this.taskService.update(tarefa.id, payload).subscribe(() => {
         this.carregarTarefas();
         this.fecharForm();
       });
     } else {
-      this.tarefaService.create(payload).subscribe(() => {
+      this.taskService.create(payload).subscribe(() => {
         this.carregarTarefas();
         this.fecharForm();
       });
@@ -107,14 +109,14 @@ export class ListaDetail implements OnInit {
 
   excluirTarefa(id: number) {
     if (confirm('Deseja remover esta tarefa?')) {
-      this.tarefaService.delete(id).subscribe(() => this.carregarTarefas());
+      this.taskService.delete(id).subscribe(() => this.carregarTarefas());
     }
   }
 
   alterarStatus(evento: { id: number; status: StatusTask }) {
     const tarefa = this.tarefas().find((t) => t.id === evento.id);
     if (!tarefa) return;
-    this.tarefaService.update(evento.id, { ...tarefa, status: evento.status }).subscribe(() => {
+    this.taskService.update(evento.id, { ...tarefa, status: evento.status }).subscribe(() => {
       this.carregarTarefas();
     });
   }

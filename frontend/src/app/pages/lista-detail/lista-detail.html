@@ -35,8 +35,8 @@
     </button>
     <button
       class="counter-chip andamento"
-      [class.active]="filtroStatus() === 'EM_ANDAMENTO'"
-      (click)="setFiltro('EM_ANDAMENTO')"
+      [class.active]="filtroStatus() === 'ANDAMENTO'"
+      (click)="setFiltro('ANDAMENTO')"
     >
       🔄 Em andamento ({{ contadores.emAndamento }})
     </button>
@@ -56,7 +56,7 @@
         <app-task-form
           [task]="tarefaEmEdicao()"
           [listaId]="listaId"
-          (salvar)="salvarTarefa($event)"
+          (salvar)="salvarTask($event)"
           (cancelar)="fecharForm()"
         />
       </div>

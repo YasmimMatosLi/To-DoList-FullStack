@@ -18,7 +18,7 @@ export class TaskCardComponent {
 
   statusOptions: { value: StatusTask; label: string }[] = [
     { value: 'PENDENTE', label: '⏳ Pendente' },
-    { value: 'EM_ANDAMENTO', label: '🔄 Em andamento' },
+    { value: 'ANDAMENTO', label: '🔄 Em andamento' },
     { value: 'CONCLUIDA', label: '✅ Concluída' },
   ];
 
@@ -33,7 +33,7 @@ export class TaskCardComponent {
   get statusClass() {
     const map: Record<StatusTask, string> = {
       PENDENTE: 'pendente',
-      EM_ANDAMENTO: 'andamento',
+      ANDAMENTO: 'andamento',
       CONCLUIDA: 'concluida',
     };
     return map[this.task.status] ?? '';

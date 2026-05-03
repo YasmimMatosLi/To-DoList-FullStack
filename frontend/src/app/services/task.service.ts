@@ -5,7 +5,7 @@ import { Task } from '../models/task.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class TarefaService {
+export class TaskService {
   private apiUrl = `${environment.apiUrl}/tasks`;
 
   constructor(private http: HttpClient) {}
@@ -18,16 +18,12 @@ export class TarefaService {
     return this.http.get<Task>(`${this.apiUrl}/${id}`);
   }
 
-  getByLista(listaId: number): Observable<Task[]> {
-    return this.http.get<Task[]>(`${this.apiUrl}/lista/${listaId}`);
+  create(tarefa: Task): Observable<Task> {
+    return this.http.post<Task>(`${this.apiUrl}/${tarefa.listaId}`, tarefa);
   }
 
-  create(task: Task): Observable<Task> {
-    return this.http.post<Task>(this.apiUrl, task);
-  }
-
-  update(id: number, task: Task): Observable<Task> {
-    return this.http.put<Task>(`${this.apiUrl}/${id}`, task);
+  update(id: number, tarefa: Task): Observable<Task> {
+    return this.http.put<Task>(`${this.apiUrl}/${id}`, tarefa);
   }
 
   delete(id: number): Observable<void> {

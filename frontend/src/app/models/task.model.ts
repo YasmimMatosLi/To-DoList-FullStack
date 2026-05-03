@@ -1,4 +1,4 @@
-export type StatusTask = 'PENDENTE' | 'EM_ANDAMENTO' | 'CONCLUIDA';
+export type StatusTask = 'PENDENTE' | 'ANDAMENTO' | 'CONCLUIDA';
 
 export interface Task {
   id?: number;

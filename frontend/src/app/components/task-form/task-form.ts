@@ -26,7 +26,7 @@ export class TaskFormComponent implements OnInit {
 
   statusOptions: { value: StatusTask; label: string }[] = [
     { value: 'PENDENTE', label: '⏳ Pendente' },
-    { value: 'EM_ANDAMENTO', label: '🔄 Em andamento' },
+    { value: 'ANDAMENTO', label: '🔄 Em andamento' },
     { value: 'CONCLUIDA', label: '✅ Concluída' },
   ];
 
