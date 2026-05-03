@@ -41,4 +41,7 @@ public class Task {
     @JsonBackReference
     private Lista lista;
 
+    @Column(name = "lista_id", insertable = false, updatable = false)
+    private Integer listaId;
+
 }
